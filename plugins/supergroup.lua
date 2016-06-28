@@ -700,12 +700,12 @@ function get_message_callback(extra, success, result)
 		savelog(msg.to.id, name_log.." ["..msg.from.id.."] kicked: ["..user_id.."] by reply to sev. msg.")
 		kick_user(user_id, channel_id)
 	elseif get_cmd == "del" then
-		delete_msg(result.id, ok_cb, false)
+		delete_msg(result.id, ok_cb, true)
 		savelog(msg.to.id, name_log.." ["..msg.from.id.."] deleted a message by reply")
 	elseif get_cmd == "setadmin" then
 		local user_id = result.from.peer_id
 		local channel_id = "channel#id"..result.to.peer_id
-		channel_set_admin(channel_id, "user#id"..user_id, ok_cb, false)
+		channel_set_admin(channel_id, "user#id"..user_id, ok_cb, true)
 		if result.from.username then
 			text = "@"..result.from.username.." set as an admin"
 		else
@@ -733,10 +733,10 @@ function get_message_callback(extra, success, result)
 		local channel_id = 'channel#id'..result.to.peer_id
 			if not is_admin2(tonumber(group_owner)) and not is_support(tonumber(group_owner)) then
 				local user = "user#id"..group_owner
-				channel_demote(channel_id, user, ok_cb, false)
+				channel_demote(channel_id, user, ok_cb, true)
 			end
 			local user_id = "user#id"..result.from.peer_id
-			channel_set_admin(channel_id, user_id, ok_cb, false)
+			channel_set_admin(channel_id, user_id, ok_cb, true)
 			data[tostring(result.to.peer_id)]['set_owner'] = tostring(result.from.peer_id)
 			save_data(_config.moderation.data, data)
 			savelog(msg.to.id, name_log.." ["..msg.from.id.."] set: ["..result.from.peer_id.."] as owner by reply")
